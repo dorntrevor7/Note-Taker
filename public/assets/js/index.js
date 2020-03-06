@@ -22,6 +22,7 @@ var saveNote = function(note) {
     data: note,
     method: "POST"
   });
+  
 };
 
 // A function for deleting a note from the db

@@ -1,17 +1,1 @@
-[
-    {
-        "id": "1153adb9-a062-4d8a-a362-1af1ce76e55a",
-        "title": "trev Title",
-        "text": "hello world text"
-    },
-    {
-        "id": "5a500b24-492f-4bc7-9761-0d34df8d015d",
-        "title": "hello Title",
-        "text": "you cray world text"
-    },
-    {
-        "id": "f85e51bd-17b8-4b88-8357-94ee294d39e1",
-        "title": "Kenneth",
-        "text": "mike"
-    }
-]
+[{"id":"5a500b24-492f-4bc7-9761-0d34df8d015d","title":"hello Title","text":"you cray world text"}]

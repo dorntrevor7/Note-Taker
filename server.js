@@ -26,21 +26,24 @@ app.post("/api/notes", function (request, result) {
         db.push(newNotes);
         // write a new file with newNotes 
         fs.writeFile("db/db.json", JSON.stringify(db), function (err, data) {
-            result.json(JSON.parse(data));
+            result.json(newNotes);
         });
+
     });
 });
 
 app.delete("/api/notes/:id", function (req, res) {
     const { id } = req.params;
+    console.log(id);
     // read the db file
     fs.readFile("db/db.json", "utf8", function (err, data) {
         const db = JSON.parse(data);
-        // push into the array
-        db.filter(id);
+
+        const newArray = db.filter(note => note.id !== id)
+
         // write a new file with newNotes 
-        fs.writeFile("db/db.json", JSON.stringify(db), function (err, data) {
-            res.json(JSON.parse(data));
+        fs.writeFile("db/db.json", JSON.stringify(newArray), function (err, data) {
+            res.json(newArray);
         });
     });
 });
