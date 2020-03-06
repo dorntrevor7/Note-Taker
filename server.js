@@ -1,7 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const express = require("express");
-const uuid = require("uuid");
+const uuid = require("uuid").v4;
 const app = express();
 const PORT = process.env.PORT || 2592;
 
@@ -16,31 +16,36 @@ app.get("/api/notes", function (req, res) {
     });
 });
 
-app.post("/api/notes", function (req, res) {
+app.post("/api/notes", function (request, result) {
     // read the db file
     fs.readFile("db/db.json", "utf8", function (err, data) {
-        res.json(JSON.parse(data));
-    });
-    // create a new note
-    const newNotes = { id: uuid(), ...req.body };
-    // push the newnote in db
-    console.log(newNotes);
-    res.push(JSON.parse(newNotes));
-    // write a new file with 
-    fs.writeFile("db/db.json", newNotes, function (err, data) {
-        res.json(JSON.parse(data));
+        const db = JSON.parse(data);
+        // create a new note
+        var newNotes = { id: uuid(), ...request.body };
+        // push into the array
+        db.push(newNotes);
+        // write a new file with newNotes 
+        fs.writeFile("db/db.json", JSON.stringify(db), function (err, data) {
+            result.json(JSON.parse(data));
+        });
     });
 });
 
 app.delete("/api/notes/:id", function (req, res) {
-
+    const { id } = req.params;
+    // read the db file
+    fs.readFile("db/db.json", "utf8", function (err, data) {
+        const db = JSON.parse(data);
+        // push into the array
+        db.filter(id);
+        // write a new file with newNotes 
+        fs.writeFile("db/db.json", JSON.stringify(db), function (err, data) {
+            res.json(JSON.parse(data));
+        });
+    });
 });
 
 // Basic route that sends the user first to the AJAX Page
-app.get("/", function (req, res) {
-    res.sendFile(path.join(__dirname, "index.html"));
-});
-
 app.get("/notes", function (req, res) {
     res.sendFile(path.join(__dirname, "/public/notes.html"));
 });
